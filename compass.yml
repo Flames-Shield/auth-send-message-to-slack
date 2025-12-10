@@ -1,0 +1,16 @@
+name: auth-send-message-to-slack
+id: ari:cloud:compass:40deb2f4-326f-4d9d-90ef-d4d1581ecfef:component/087d4bcd-9c66-4d6b-bee1-e36c9bc7b392/8a9f06e6-e129-4558-b826-6b4585833d72
+description: This extension sends a message to your slack bot once a new user is created
+configVersion: 1
+typeId: SERVICE
+fields:
+  tier: 4
+links:
+  - name: null
+    type: REPOSITORY
+    url: https://github.com/Flames-Shield/auth-send-message-to-slack
+relationships:
+  DEPENDS_ON: []
+labels:
+  - source:github
+customFields: null
