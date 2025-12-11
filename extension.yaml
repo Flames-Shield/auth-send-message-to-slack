@@ -40,7 +40,7 @@ resources:
       eventTrigger:
         eventType: providers/firebase.auth/eventTypes/user.create
         resource: projects/${PROJECT_ID}
-      runtime: 'nodejs18'
+      runtime: 'nodejs20'
 
 # https://firebase.google.com/docs/extensions/reference/extension-yaml#params-field
 params:
