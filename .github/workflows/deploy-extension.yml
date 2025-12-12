@@ -43,12 +43,19 @@ jobs:
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GOOGLE_CLOUD_SERVICE_ACCOUNT_KEY }}
+          # Note: For enhanced security, consider using Workload Identity Federation
+          # instead of storing long-lived service account keys
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
       - name: Install Firebase CLI
-        run: npm install -g firebase-tools
+        run: npm install -g firebase-tools@^13.0.0
+
+      - name: Install yq for YAML parsing
+        run: |
+          sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+          sudo chmod +x /usr/local/bin/yq
 
       - name: Deploy extension
         run: |
@@ -57,7 +64,8 @@ jobs:
             VERSION="${GITHUB_REF#refs/tags/v}"
             echo "Deploying version from tag: $VERSION"
           else
-            VERSION=$(grep '^version:' extension.yaml | awk '{print $2}')
+            # Use yq for robust YAML parsing
+            VERSION=$(yq '.version' extension.yaml)
             echo "Deploying version from extension.yaml: $VERSION"
           fi
           

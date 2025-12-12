@@ -9,6 +9,8 @@ To use the deployment workflow, you need to configure the following secrets in y
 ### 1. `GOOGLE_CLOUD_SERVICE_ACCOUNT_KEY`
 A JSON key for a Google Cloud service account with the necessary permissions to deploy Firebase Extensions.
 
+**Security Note:** For enhanced security in production environments, consider using [Workload Identity Federation](https://cloud.google.com/iam/docs/workload-identity-federation) instead of storing long-lived service account keys. This eliminates the need to store credentials in GitHub.
+
 **How to create:**
 1. Go to the [Google Cloud Console](https://console.cloud.google.com/)
 2. Navigate to IAM & Admin > Service Accounts
