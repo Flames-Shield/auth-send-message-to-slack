@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    name: Lint, Build, and Test
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: functions/package-lock.json
+
+      - name: Install dependencies
+        working-directory: ./functions
+        run: npm ci
+
+      - name: Lint code
+        working-directory: ./functions
+        run: npm run lint
+
+      - name: Build extension
+        working-directory: ./functions
+        run: npm run build
+
+      - name: Verify extension.yaml
+        run: |
+          if [ ! -f "extension.yaml" ]; then
+            echo "Error: extension.yaml not found"
+            exit 1
+          fi
+          echo "extension.yaml verified"
+
+      - name: Check built files
+        run: |
+          if [ ! -d "functions/lib" ]; then
+            echo "Error: Build output directory not found"
+            exit 1
+          fi
+          if [ ! -f "functions/lib/index.js" ]; then
+            echo "Error: Main entry point not built"
+            exit 1
+          fi
+          echo "Build output verified"
