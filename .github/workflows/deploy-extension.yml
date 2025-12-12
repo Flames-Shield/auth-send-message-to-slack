@@ -16,6 +16,10 @@ jobs:
     name: Deploy to Firebase Extensions
     runs-on: ubuntu-latest
     
+    permissions:
+      contents: read
+      id-token: write  # Required for Google Cloud authentication
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
